@@ -4,11 +4,11 @@ public class PlayerController
 {
     public void Move(Rigidbody2D rb, Vector2 moveDirection, float speed)
     {
-        rb.AddForce(new Vector2(moveDirection.x * speed * Time.deltaTime, moveDirection.y * speed * Time.deltaTime));
+        rb.velocity = new Vector2(moveDirection.x * speed, moveDirection.y * speed);
     }
 
-    public void Fire(Vector2 shootDirection, GameObject bulletPrefab)
+    public void Fire(Transform parent, GameObject bulletPrefab)
     {
-
+        Object.Instantiate(bulletPrefab, parent.GetChild(0).position, parent.rotation);
     }
 }

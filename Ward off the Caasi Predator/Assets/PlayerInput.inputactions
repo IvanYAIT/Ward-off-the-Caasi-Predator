@@ -1,5 +1,5 @@
 {
-    "name": "Ward off the Caasi Predator",
+    "name": "PlayerInput",
     "maps": [
         {
             "name": "Player",
@@ -134,7 +134,7 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "up",
+                    "name": "Up",
                     "id": "d00b2b29-cee2-4ca4-94ba-4cbd0a52933c",
                     "path": "<Keyboard>/upArrow",
                     "interactions": "",
@@ -145,7 +145,7 @@
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "down",
+                    "name": "Down",
                     "id": "fe6a16a6-66e0-4f4d-9c1c-959757df6ab0",
                     "path": "<Keyboard>/downArrow",
                     "interactions": "",
@@ -156,8 +156,8 @@
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "left",
-                    "id": "00562d33-fc1e-433c-8e54-021d10b7211b",
+                    "name": "Left",
+                    "id": "a4b464e8-d9e0-4d25-a1e2-38e7ba9f72fd",
                     "path": "<Keyboard>/leftArrow",
                     "interactions": "",
                     "processors": "",
@@ -167,8 +167,8 @@
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "right",
-                    "id": "ff036a10-e657-4f29-8feb-d85ab3e4384c",
+                    "name": "Right",
+                    "id": "33a753ab-1228-4ecd-92ef-91d2e1cfcbdf",
                     "path": "<Keyboard>/rightArrow",
                     "interactions": "",
                     "processors": "",
