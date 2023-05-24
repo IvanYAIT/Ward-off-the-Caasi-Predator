@@ -933,11 +933,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2817766b9712957459886a1660732d53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 3
-  damage: 3
-  playerSpeed: 6
-  shootSpeed: 1
-  bulletSpeed: 5
+  "player\u0421haracteristics": {fileID: 11400000, guid: cd835588507a0bd4cab6253df5e92912, type: 2}
   maxRooms: 5
   bombCount: 3
   bombLifeTime: 2
@@ -945,7 +941,7 @@ MonoBehaviour:
   bombPrefab: {fileID: 8460738614068806357, guid: 7b404793e7b799f46afd85ffab22214e, type: 3}
   bombSystem: {fileID: 1359067768}
   heartsParent: {fileID: 680138733}
-  rb: {fileID: 400206907}
+  playerRb: {fileID: 400206907}
   head: {fileID: 1337441121}
   bulletPrefab: {fileID: 8137961797011989632, guid: f27a31ac7d15a674e95c0ef1071beedd, type: 3}
   inputListener: {fileID: 1685569584}

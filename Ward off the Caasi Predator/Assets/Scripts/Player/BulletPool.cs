@@ -5,10 +5,11 @@ public class BulletPool
 {
     public List<GameObject> Bullets { get; private set; }
 
-    private GameObject bulletPrefab;
+    private GameObject _bulletPrefab;
 
-    public BulletPool(int bulletAmount)
+    public BulletPool(int bulletAmount, GameObject bulletPrefab)
     {
+        _bulletPrefab = bulletPrefab;
         Bullets = new List<GameObject>();
         InitPool(bulletAmount);
     }
@@ -17,7 +18,7 @@ public class BulletPool
     {
         for (int i = 0; i < poolSize; i++)
         {
-            Bullets.Add(Object.Instantiate(bulletPrefab));
+            Bullets.Add(Object.Instantiate(_bulletPrefab));
         }
     }
 

@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -9,7 +8,6 @@ public class InputListener : MonoBehaviour
     private float _bulletSpeed;
     private Rigidbody2D _rb;
     private Transform _head;
-    private GameObject _bulletPrefab;
     private float _shootSpeed;
     private BulletPool _bulletPool;
 
@@ -23,7 +21,6 @@ public class InputListener : MonoBehaviour
     private void Awake()
     {
         _playerInput = new PlayerInput();
-        _playerController = new PlayerController(_bulletPool);
     }
 
     private void OnEnable()
@@ -71,8 +68,7 @@ public class InputListener : MonoBehaviour
 
     public void Construct(float speed, 
                         Rigidbody2D rb, 
-                        Transform head, 
-                        GameObject bulletPrefab, 
+                        Transform head,
                         float shootSpeed, 
                         float bulletSpeed, 
                         BombSystem bombSystem,
@@ -84,7 +80,7 @@ public class InputListener : MonoBehaviour
         _speed = speed;
         _shootSpeed = shootSpeed;
         _head = head;
-        _bulletPrefab = bulletPrefab;
         _bombSystem = bombSystem;
+        _playerController = new PlayerController(_bulletPool);
     }
 }

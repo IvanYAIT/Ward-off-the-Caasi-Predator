@@ -25,15 +25,15 @@ public class Bootstrapper : MonoBehaviour
 
     void Start()
     {
-        BulletPool bulletPool = new BulletPool(10);
+        LevelGenerator levelGenerator = new LevelGenerator();
+        BulletPool bulletPool = new BulletPool(10, bulletPrefab);
         bombSystem.Construct(playerTransform, bombPrefab, bombCount, bombLifeTime);
         RoomGenerator roomGenerator = new RoomGenerator(roomPrefab, maxRooms);
         startRoom.Construct(0, roomGenerator);
         HealthSystem healthSystem = new HealthSystem(player—haracteristics.Health, heartsParent);
         inputListener.Construct(player—haracteristics.PlayerSpeed,
                             playerRb, 
-                            head, 
-                            bulletPrefab, 
+                            head,
                             player—haracteristics.ShootSpeed, 
                             player—haracteristics.BulletSpeed, 
                             bombSystem,
