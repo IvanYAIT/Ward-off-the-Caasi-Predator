@@ -11,16 +11,19 @@ public class InputListener : MonoBehaviour
     private Transform _head;
     private GameObject _bulletPrefab;
     private float _shootSpeed;
+    private BulletPool _bulletPool;
 
     private PlayerController _playerController;
     private PlayerInput _playerInput;
+    private BombSystem _bombSystem;
     private InputAction _move;
     private InputAction _fire;
     private bool onCooldown;
+
     private void Awake()
     {
         _playerInput = new PlayerInput();
-        _playerController = new PlayerController();
+        _playerController = new PlayerController(_bulletPool);
     }
 
     private void OnEnable()
@@ -46,7 +49,9 @@ public class InputListener : MonoBehaviour
         {
             StartCoroutine(Shoot());
         }
-            
+
+        if (Input.GetKeyDown(KeyCode.E))
+            _bombSystem.UseBomb();
     }
 
     private IEnumerator Shoot()
@@ -59,18 +64,27 @@ public class InputListener : MonoBehaviour
             _head.rotation = Quaternion.AngleAxis(0, Vector3.forward);
         else if (fireDirection.y == -1)
             _head.rotation = Quaternion.AngleAxis(180, Vector3.forward);
-        _playerController.Fire(_head, _bulletPrefab, _bulletSpeed);
+        _playerController.Fire(_head, _bulletSpeed);
         yield return new WaitForSeconds(_shootSpeed);
         onCooldown = false;
     }
 
-    public void Construct(float speed, Rigidbody2D rb, Transform head, GameObject bulletPrefab, float shootSpeed, float bulletSpeed)
+    public void Construct(float speed, 
+                        Rigidbody2D rb, 
+                        Transform head, 
+                        GameObject bulletPrefab, 
+                        float shootSpeed, 
+                        float bulletSpeed, 
+                        BombSystem bombSystem,
+                        BulletPool bulletPool)
     {
+        _bulletPool = bulletPool;
         _bulletSpeed = bulletSpeed;
         _rb = rb;
         _speed = speed;
         _shootSpeed = shootSpeed;
         _head = head;
         _bulletPrefab = bulletPrefab;
+        _bombSystem = bombSystem;
     }
 }
