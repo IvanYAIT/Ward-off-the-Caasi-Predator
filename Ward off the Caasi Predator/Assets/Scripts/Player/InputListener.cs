@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class InputListener : MonoBehaviour
 {
@@ -41,6 +42,9 @@ public class InputListener : MonoBehaviour
     {
         Vector2 moveDirection = _move.ReadValue<Vector2>();
         _playerController.Move(_rb, moveDirection, _speed);
+
+        if (Input.GetKeyDown(KeyCode.R))
+            SceneManager.LoadScene(0);
 
         if (!onCooldown && _fire.IsPressed())
         {
