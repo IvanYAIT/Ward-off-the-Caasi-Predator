@@ -20,6 +20,8 @@ public class SmartLevelGenerator
     private GameObject _goldenRoomPrefab;
     private GameObject _bossRoomPrefab;
 
+    private const int STARTED_ROOM_INDEX = 55;
+
     public SmartLevelGenerator(int minAmountOfRooms, int maxAmountOfRooms, GameObject roomPrefab, GameObject bossRoomPrefab, GameObject goldenRoomPrefab)
     {
         _bossRoomPrefab = bossRoomPrefab;
@@ -36,7 +38,7 @@ public class SmartLevelGenerator
         _level = new int[100];
         _endRooms = new List<int>();
         _roomQueue = new Queue<int>();
-        Visit(45);
+        Visit(STARTED_ROOM_INDEX);
     }
 
     private bool Visit(int roomIndex)
@@ -51,7 +53,7 @@ public class SmartLevelGenerator
             return false;
 
         System.Random rnd = new System.Random();
-        if (rnd.NextDouble() < 0.5 && roomIndex != 45)
+        if (rnd.NextDouble() < 0.5 && roomIndex != 55)
             return false;
 
         _roomQueue.Enqueue(roomIndex);
@@ -80,7 +82,7 @@ public class SmartLevelGenerator
                     created = Visit(i + 10);
                 if (!created)
                 {
-                    if(NeighbourCount(i) <= 1)
+                    if(NeighbourCount(i) <= 1 && i != STARTED_ROOM_INDEX)
                         _endRooms.Add(i);
                 }
                     
@@ -99,7 +101,6 @@ public class SmartLevelGenerator
 
                 int goldenRoom = RandomRoom();
                 CreateRoom(goldenRoom, _goldenRoomPrefab);
-                Debug.Log(_endRooms.Count);
             }
         } 
     }
@@ -118,9 +119,32 @@ public class SmartLevelGenerator
 
     private void CreateRoom(int roomIndex, GameObject prefab)
     {
-        int x = ((roomIndex % 10) - (_level.Length/4)) * HEIGTH;
-        int y = ((roomIndex / 10) - (_level.Length / 4)) * WIDTH;
+        int x = ((roomIndex % 10) - (_level.Length / 20)) * HEIGTH;
+        int y = ((roomIndex / 10) - (_level.Length / 20)) * WIDTH;
 
-        GameObject.Instantiate(prefab, new Vector2(x, y), Quaternion.identity);
+        GameObject currentRoom = GameObject.Instantiate(prefab, new Vector2(x, y), Quaternion.identity);
+        int[] rooms;
+        CheckRoomNeighbour(roomIndex, out rooms);
+        try
+        {
+            currentRoom.GetComponent<Room>().Construct(roomIndex, rooms);
+        }
+        catch (Exception)
+        {
+            return;
+        }
+    }
+
+    private void CheckRoomNeighbour(int roomIndex, out int[] doors)
+    {
+        doors = new int[4];
+        if (_level[roomIndex - 1] > 0)
+            doors[0] = 1;
+        if (_level[roomIndex + 1] > 0)
+            doors[1] = 1;
+        if (_level[roomIndex + 10] > 0)
+            doors[2] = 1;
+        if (_level[roomIndex - 10] > 0)
+            doors[3] = 1;
     }
 }

@@ -4,24 +4,47 @@ using UnityEngine;
 
 public class Room : MonoBehaviour
 {
-    public Room UpRoom { get; private set; }
-    public Room DownRoom { get; private set; }
-    public Room RightRoom { get; private set; }
-    public Room LeftRoom { get; private set; }
+    [SerializeField] private LayerMask playerLayerMask;
+    [SerializeField] private LayerMask bossRoomLayerMask;
+    [SerializeField] private LayerMask goldenRoomLayerMask;
+    [SerializeField] private Transform doorsParent;
 
-    private int _roomCount;
-    private RoomGenerator _roomGenerator;
+    private int _index;
+    private int[] _doors;
 
-    private void NextRooms()
+    private int _playerLayer;
+    private int _bossRoomLayer;
+    private int _goldenRoomLayer;
+
+    private void Start()
     {
-        Room[] rooms;
-        _roomGenerator.Generate(_roomCount, _roomGenerator,this,transform, out rooms);
+        _playerLayer = (int)Mathf.Log(playerLayerMask.value, 2);
+        _bossRoomLayer = (int)Mathf.Log(bossRoomLayerMask.value, 2);
+        _goldenRoomLayer = (int)Mathf.Log(goldenRoomLayerMask.value, 2);
     }
 
-    public void Construct(int roomCount, RoomGenerator roomGenerator)
+    private void OnTriggerStay2D(Collider2D collision)
     {
-        _roomCount = roomCount;
-        _roomGenerator = roomGenerator;
-        NextRooms();
+        if(collision.gameObject.layer != _playerLayer)
+            gameObject.SetActive(false);
+    }
+
+    public void Construct(int index, int[] doors)
+    {
+        _index = index;
+        _doors = doors;
+        CreateDoors();
+    }
+
+    private void CreateDoors()
+    {
+        if (_doors[0] == 1)
+            doorsParent.GetChild(0).gameObject.SetActive(true);
+        if (_doors[1] == 1)
+            doorsParent.GetChild(1).gameObject.SetActive(true);
+        if (_doors[2] == 1)
+            doorsParent.GetChild(2).gameObject.SetActive(true);
+        if (_doors[3] == 1)
+            doorsParent.GetChild(3).gameObject.SetActive(true);
     }
 }

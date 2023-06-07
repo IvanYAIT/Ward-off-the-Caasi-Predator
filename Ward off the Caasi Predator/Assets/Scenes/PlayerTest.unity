@@ -937,7 +937,7 @@ MonoBehaviour:
   bombCount: 3
   bombLifeTime: 2
   minAmountOfRooms: 7
-  maxAmountOfRooms: 16
+  maxAmountOfRooms: 10
   playerTransform: {fileID: 400206906}
   bombPrefab: {fileID: 8460738614068806357, guid: 7b404793e7b799f46afd85ffab22214e, type: 3}
   bombSystem: {fileID: 1359067768}
