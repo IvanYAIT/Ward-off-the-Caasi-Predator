@@ -3,19 +3,23 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - left
+  - right
+  - up
+  - down
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Enemy
   - Water
   - UI
   - Player
   - Bullet
   - BossRoom
   - GoldenRoom
-  - 
+  - Door
   - 
   - 
   - 

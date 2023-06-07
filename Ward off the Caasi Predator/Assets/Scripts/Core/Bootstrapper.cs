@@ -1,3 +1,4 @@
+using NavMeshPlus.Components;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -22,8 +23,10 @@ public class Bootstrapper : MonoBehaviour
     [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private InputListener inputListener;
     [SerializeField] private GameObject roomPrefab;
+    [SerializeField] private GameObject startRoomPrefab;
     [SerializeField] private GameObject bossRoomPrefab;
     [SerializeField] private GameObject goldenRoomPrefab;
+    [SerializeField] private NavMeshSurface Surface2D;
 
     private SmartLevelGenerator smartLevelGenerator;
     void Start()
@@ -38,8 +41,7 @@ public class Bootstrapper : MonoBehaviour
                             player—haracteristics.BulletSpeed, 
                             bombSystem,
                             bulletPool);
-        //LevelGenerator levelGenerator = new LevelGenerator(roomPrefabOne, roomPrefabSecond);
-        smartLevelGenerator = new SmartLevelGenerator(minAmountOfRooms, maxAmountOfRooms, roomPrefab, bossRoomPrefab, goldenRoomPrefab);
+        smartLevelGenerator = new SmartLevelGenerator(minAmountOfRooms, maxAmountOfRooms, roomPrefab, startRoomPrefab, bossRoomPrefab, goldenRoomPrefab, Surface2D);
     }
 
     private void Update()

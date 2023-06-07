@@ -8,32 +8,56 @@ public class Room : MonoBehaviour
     [SerializeField] private LayerMask bossRoomLayerMask;
     [SerializeField] private LayerMask goldenRoomLayerMask;
     [SerializeField] private Transform doorsParent;
+    [SerializeField] private Transform enemyParent;
+    [SerializeField] private bool isSpecial;
 
-    private int _index;
+    public int Index { get; private set; }
+
     private int[] _doors;
-
-    private int _playerLayer;
     private int _bossRoomLayer;
     private int _goldenRoomLayer;
+    private int _playerLayer;
 
     private void Start()
     {
-        _playerLayer = (int)Mathf.Log(playerLayerMask.value, 2);
         _bossRoomLayer = (int)Mathf.Log(bossRoomLayerMask.value, 2);
         _goldenRoomLayer = (int)Mathf.Log(goldenRoomLayerMask.value, 2);
+        _playerLayer = (int)Mathf.Log(playerLayerMask.value, 2);
+    }
+
+    private void Update()
+    {
+        if(enemyParent.childCount <= 0)
+            CreateDoors();
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.gameObject.layer == _playerLayer)
+        {
+            CameraMover.OnMove?.Invoke(new Vector3(transform.position.x, transform.position.y, -10));
+            for (int i = 0; i < enemyParent.childCount; i++)
+            {
+                enemyParent.GetChild(i).gameObject.SetActive(true);
+            }
+        }
+            
     }
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if(collision.gameObject.layer != _playerLayer)
+        if(collision.gameObject.layer == _bossRoomLayer || collision.gameObject.layer == _goldenRoomLayer)
             gameObject.SetActive(false);
     }
 
-    public void Construct(int index, int[] doors)
+    public void Construct(int index)
     {
-        _index = index;
+        Index = index;
+    }
+
+    public void SetDoors(int[] doors)
+    {
         _doors = doors;
-        CreateDoors();
     }
 
     private void CreateDoors()

@@ -31,6 +31,6 @@ public class BombSystem : MonoBehaviour
     private IEnumerator BombLife(GameObject obj)
     {
         yield return new WaitForSeconds(_bombLifeTime);
-        Destroy(obj);
+        obj.SetActive(false);
     }
 }

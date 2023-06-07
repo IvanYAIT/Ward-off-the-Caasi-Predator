@@ -1,3 +1,4 @@
+using NavMeshPlus.Components;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -17,18 +18,24 @@ public class SmartLevelGenerator
     private bool _started;
     private bool _placedSpecial;
     private GameObject _roomPrefab;
+    private GameObject _startRoomPrefab;
     private GameObject _goldenRoomPrefab;
     private GameObject _bossRoomPrefab;
+    private List<Room> _roomsObjects;
+    private NavMeshSurface _surface2D;
 
     private const int STARTED_ROOM_INDEX = 55;
 
-    public SmartLevelGenerator(int minAmountOfRooms, int maxAmountOfRooms, GameObject roomPrefab, GameObject bossRoomPrefab, GameObject goldenRoomPrefab)
+    public SmartLevelGenerator(int minAmountOfRooms, int maxAmountOfRooms, GameObject roomPrefab, GameObject startRoomPrefab, GameObject bossRoomPrefab, GameObject goldenRoomPrefab, NavMeshSurface surface2D)
     {
         _bossRoomPrefab = bossRoomPrefab;
         _goldenRoomPrefab = goldenRoomPrefab;
         _roomPrefab = roomPrefab;
+        _startRoomPrefab = startRoomPrefab;
         _minAmountOfRooms = minAmountOfRooms;
         _maxAmountOfRooms = maxAmountOfRooms;
+        _surface2D = surface2D;
+        _roomsObjects = new List<Room>();
         Start();
     }
 
@@ -59,7 +66,11 @@ public class SmartLevelGenerator
         _roomQueue.Enqueue(roomIndex);
         _level[roomIndex] = 1;
         _currentAmountOfRooms++;
-        CreateRoom(roomIndex, _roomPrefab);
+        if(roomIndex == STARTED_ROOM_INDEX)
+            CreateRoom(roomIndex, _startRoomPrefab);
+        else
+            CreateRoom(roomIndex, _roomPrefab);
+
         return true;
     }
 
@@ -94,6 +105,7 @@ public class SmartLevelGenerator
                     Start();
                     return;
                 }
+                
                 _placedSpecial = true;
                 int bossRoom = _endRooms[_endRooms.Count - 1];
                 _endRooms.RemoveAt(_endRooms.Count - 1);
@@ -101,6 +113,15 @@ public class SmartLevelGenerator
 
                 int goldenRoom = RandomRoom();
                 CreateRoom(goldenRoom, _goldenRoomPrefab);
+
+                foreach (Room item in _roomsObjects)
+                {
+                    int[] doors;
+                    CheckRoomNeighbour(item.Index, out doors);
+                    item.SetDoors(doors);
+                }
+
+                _surface2D.BuildNavMeshAsync();
             }
         } 
     }
@@ -123,16 +144,10 @@ public class SmartLevelGenerator
         int y = ((roomIndex / 10) - (_level.Length / 20)) * WIDTH;
 
         GameObject currentRoom = GameObject.Instantiate(prefab, new Vector2(x, y), Quaternion.identity);
-        int[] rooms;
-        CheckRoomNeighbour(roomIndex, out rooms);
-        try
-        {
-            currentRoom.GetComponent<Room>().Construct(roomIndex, rooms);
-        }
-        catch (Exception)
-        {
-            return;
-        }
+        Room room;
+        currentRoom.TryGetComponent<Room>(out room);
+        room.Construct(roomIndex);
+        _roomsObjects.Add(room);
     }
 
     private void CheckRoomNeighbour(int roomIndex, out int[] doors)
