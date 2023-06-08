@@ -294,6 +294,9 @@ MonoBehaviour:
   doorLayerMask:
     serializedVersion: 2
     m_Bits: 1024
+  heartLayerMask:
+    serializedVersion: 2
+    m_Bits: 2048
 --- !u!1 &414652369
 GameObject:
   m_ObjectHideFlags: 0
@@ -1140,7 +1143,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   "player\u0421haracteristics": {fileID: 11400000, guid: cd835588507a0bd4cab6253df5e92912, type: 2}
   bombCount: 3
-  bombLifeTime: 2
   minAmountOfRooms: 7
   maxAmountOfRooms: 10
   playerTransform: {fileID: 400206906}
@@ -1156,6 +1158,7 @@ MonoBehaviour:
   bossRoomPrefab: {fileID: 5035268443641263307, guid: 2df2ea9f1cba14c4cafc2c37419deb67, type: 3}
   goldenRoomPrefab: {fileID: 5035268443641263307, guid: 64876660423b03741a6959310c08d965, type: 3}
   Surface2D: {fileID: 619749079}
+  player: {fileID: 400206909}
 --- !u!1 &928670355
 GameObject:
   m_ObjectHideFlags: 0

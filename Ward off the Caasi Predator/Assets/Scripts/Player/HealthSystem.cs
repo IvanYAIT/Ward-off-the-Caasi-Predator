@@ -26,6 +26,7 @@ public class HealthSystem
             _currentHealth--;
             _hearts[_currentHealth].gameObject.SetActive(false);
         }
+        CheckHealth();
     }
 
     public void HealHeart()
@@ -39,7 +40,6 @@ public class HealthSystem
 
     public void IncreaseMaxHealth()
     {
-        Debug.Log("aaaaaaaa");
         if (_currentMaxHealth != _hearts.Count)
         {
             _currentMaxHealth++;
@@ -58,5 +58,11 @@ public class HealthSystem
                 _hearts[_currentHealth].gameObject.SetActive(false);
             }
         }
+    }
+
+    private void CheckHealth()
+    {
+        if (_currentHealth <= 0)
+            Game.OnEnd?.Invoke();
     }
 }

@@ -11,12 +11,17 @@ public class Room : MonoBehaviour
     [SerializeField] private Transform enemyParent;
     [SerializeField] private bool isSpecial;
 
+    [SerializeField] private GameObject pickableObject;
+    [SerializeField] private Transform pickableObjectSpawnPoint;
+
     public int Index { get; private set; }
 
     private int[] _doors;
     private int _bossRoomLayer;
     private int _goldenRoomLayer;
     private int _playerLayer;
+    private bool isDoorsSet;
+    private bool isPickableObjectSpawn;
 
     private void Start()
     {
@@ -27,8 +32,16 @@ public class Room : MonoBehaviour
 
     private void Update()
     {
-        if(enemyParent.childCount <= 0)
+        if(enemyParent.childCount <= 0 && isDoorsSet)
+        {
             CreateDoors();
+            if (!isSpecial && !isPickableObjectSpawn)
+            {
+                Instantiate(pickableObject, pickableObjectSpawnPoint.position, Quaternion.identity);
+                isPickableObjectSpawn = true;
+            }
+        }
+            
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -58,6 +71,7 @@ public class Room : MonoBehaviour
     public void SetDoors(int[] doors)
     {
         _doors = doors;
+        isDoorsSet = true;
     }
 
     private void CreateDoors()

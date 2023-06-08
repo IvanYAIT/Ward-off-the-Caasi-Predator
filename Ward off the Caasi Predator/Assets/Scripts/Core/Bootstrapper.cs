@@ -9,7 +9,6 @@ public class Bootstrapper : MonoBehaviour
     [SerializeField] private Player—haracteristics player—haracteristics;
     [Header("Bomb settings")]
     [SerializeField] private int bombCount;
-    [SerializeField] private int bombLifeTime;
     [Header("Level Generator")]
     [SerializeField] private int minAmountOfRooms;
     [SerializeField] private int maxAmountOfRooms;
@@ -27,18 +26,23 @@ public class Bootstrapper : MonoBehaviour
     [SerializeField] private GameObject bossRoomPrefab;
     [SerializeField] private GameObject goldenRoomPrefab;
     [SerializeField] private NavMeshSurface Surface2D;
+    [SerializeField] private Player player;
 
     private SmartLevelGenerator smartLevelGenerator;
+
     void Start()
     {
+        Game game = new Game();
         BulletPool bulletPool = new BulletPool(10, bulletPrefab);
-        bombSystem.Construct(playerTransform, bombPrefab, bombCount, bombLifeTime);
+        bombSystem.Construct(playerTransform, bombPrefab, bombCount);
         HealthSystem healthSystem = new HealthSystem(player—haracteristics.Health, heartsParent);
+        player.Construct(healthSystem);
         inputListener.Construct(player—haracteristics.PlayerSpeed,
                             playerRb, 
                             head,
-                            player—haracteristics.ShootSpeed, 
-                            player—haracteristics.BulletSpeed, 
+                            player—haracteristics.ShootSpeed,
+                            player—haracteristics.BulletSpeed,
+                            player—haracteristics.Damage,
                             bombSystem,
                             bulletPool);
         smartLevelGenerator = new SmartLevelGenerator(minAmountOfRooms, maxAmountOfRooms, roomPrefab, startRoomPrefab, bossRoomPrefab, goldenRoomPrefab, Surface2D);

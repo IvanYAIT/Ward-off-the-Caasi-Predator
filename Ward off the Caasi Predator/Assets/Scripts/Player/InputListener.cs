@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class InputListener : MonoBehaviour
 {
     private float _speed;
+    private float _damage;
     private float _bulletSpeed;
     private Rigidbody2D _rb;
     private Transform _head;
@@ -65,7 +66,7 @@ public class InputListener : MonoBehaviour
             _head.rotation = Quaternion.AngleAxis(0, Vector3.forward);
         else if (fireDirection.y == -1)
             _head.rotation = Quaternion.AngleAxis(180, Vector3.forward);
-        _playerController.Fire(_head, _bulletSpeed);
+        _playerController.Fire(_head, _bulletSpeed, _damage);
         yield return new WaitForSeconds(_shootSpeed);
         onCooldown = false;
     }
@@ -74,12 +75,14 @@ public class InputListener : MonoBehaviour
                         Rigidbody2D rb, 
                         Transform head,
                         float shootSpeed, 
-                        float bulletSpeed, 
+                        float bulletSpeed,
+                        float damage,
                         BombSystem bombSystem,
                         BulletPool bulletPool)
     {
         _bulletPool = bulletPool;
         _bulletSpeed = bulletSpeed;
+        _damage = damage;
         _rb = rb;
         _speed = speed;
         _shootSpeed = shootSpeed;

@@ -3,12 +3,16 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     [SerializeField] private LayerMask doorLayerMask;
+    [SerializeField] private LayerMask heartLayerMask;
 
     private int _doorLayer;
+    private HealthSystem _healthSystem;
+    private int _heartLayer;
 
     private void Start()
     {
         _doorLayer = (int)Mathf.Log(doorLayerMask.value, 2);
+        _heartLayer = (int)Mathf.Log(heartLayerMask.value, 2);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -31,5 +35,24 @@ public class Player : MonoBehaviour
                     break;
             }
         }
+
+        if (collision.gameObject.layer == _heartLayer)
+        {
+            _healthSystem.HealHeart();
+            collision.gameObject.SetActive(false);
+        }
+            
+    }
+
+
+
+    public void Construct(HealthSystem healthSystem)
+    {
+        _healthSystem = healthSystem;
+    }
+
+    public void GetDamage()
+    {
+        _healthSystem.GetDamage();
     }
 }

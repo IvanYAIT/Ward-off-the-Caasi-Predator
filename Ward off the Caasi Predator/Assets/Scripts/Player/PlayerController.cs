@@ -14,7 +14,7 @@ public class PlayerController
         rb.velocity = new Vector2(moveDirection.x * speed, moveDirection.y * speed);
     }
 
-    public void Fire(Transform parent, float bulletSpeed)
+    public void Fire(Transform parent, float bulletSpeed, float damage)
     {
         for (int i = 0; i < _pool.Bullets.Count; i++)
         {
@@ -24,7 +24,9 @@ public class PlayerController
                 obj.SetActive(true);
                 obj.transform.position = parent.GetChild(0).position;
                 obj.transform.rotation = parent.rotation;
-                obj.GetComponent<Bullet>().SetSpeed(bulletSpeed);
+                Bullet currentBullet = obj.GetComponent<Bullet>();
+                currentBullet.SetSpeed(bulletSpeed);
+                currentBullet.SetDamage(damage);
                 return;
             }
         }

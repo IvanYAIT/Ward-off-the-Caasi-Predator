@@ -35,6 +35,37 @@ Transform:
   m_Father: {fileID: 5035268443641263317}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &635694756874752585
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1698387886163187348}
+  m_Layer: 0
+  m_Name: SpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1698387886163187348
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 635694756874752585}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5035268443641263317}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2045078318084877417
 GameObject:
   m_ObjectHideFlags: 0
@@ -264,6 +295,7 @@ Transform:
   - {fileID: 9051550164271191275}
   - {fileID: 7447178427027849383}
   - {fileID: 9138101947867303963}
+  - {fileID: 1698387886163187348}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -369,6 +401,8 @@ MonoBehaviour:
   doorsParent: {fileID: 7447178427027849383}
   enemyParent: {fileID: 9138101947867303963}
   isSpecial: 1
+  pickableObject: {fileID: 8397213759838005267, guid: 0f08cb3d164eab643b9fd5451a46c7c6, type: 3}
+  pickableObjectSpawnPoint: {fileID: 1698387886163187348}
 --- !u!1 &5939118610197136437
 GameObject:
   m_ObjectHideFlags: 0

@@ -6,16 +6,14 @@ public class BombSystem : MonoBehaviour
 {
     private Transform _player;
     private GameObject _bombPrefab;
-    private int _bombLifeTime;
 
     private int _currentAmountBomb;
 
-    public void Construct(Transform player, GameObject bombPrefab, int bombCount, int bombLifeTime)
+    public void Construct(Transform player, GameObject bombPrefab, int bombCount)
     {
         _player = player;
         _bombPrefab = bombPrefab;
         _currentAmountBomb = bombCount;
-        _bombLifeTime = bombLifeTime;
     }
 
     public void UseBomb()
@@ -24,13 +22,6 @@ public class BombSystem : MonoBehaviour
         {
             GameObject obj = Instantiate(_bombPrefab, _player.position, Quaternion.identity);
             _currentAmountBomb--;
-            StartCoroutine(BombLife(obj));
         }
-    }    
-
-    private IEnumerator BombLife(GameObject obj)
-    {
-        yield return new WaitForSeconds(_bombLifeTime);
-        obj.SetActive(false);
     }
 }
